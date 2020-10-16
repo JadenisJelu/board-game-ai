@@ -2,9 +2,9 @@ import random
 from copy import deepcopy
 
 # variables definition
-rows = 5
-cols = 5
-mines = 3
+rows = 6
+cols = 6
+mines = 0
 
 # check number of mines
 if mines > rows*cols:
@@ -74,5 +74,46 @@ for i in range(rows):
         else: 
             answer_board[i][j] = "x"
 
-print("board answer")
-[print (i) for i in answer_board]
+#print("board answer")
+#[print (i) for i in answer_board]
+
+def key_input(dic, x, y):
+    dic[(x, y)] = []
+    for i in [(x-1, y), (x-1, y+1), (x,y+1), (x+1, y+1), (x+1, y), (x+1, y-1), (x, y-1), (x-1,y-1)]:
+        a , b = i
+        if a < 0 or b < 0:
+            continue
+        if i not in visited:
+            dic[(x, y)].append(i)
+    return None
+
+# depth first search for non-0
+visited = []
+stack = []
+
+def dfs(board, x, y, rows, cols):
+    visited.append((x,y))
+    stack.append((x,y))
+
+    # key error cause dic is not inputed recursively
+    dic = {
+        (x,y):[(x-1, y), (x-1, y+1), (x,y+1), (x+1, y+1), (x+1, y), (x+1, y-1), (x, y-1), (x-1,y-1)]
+    }
+       
+    while stack:
+        s = stack.pop(0)
+        print(s)
+        print(stack)
+        
+        if s not in dic.keys():
+            a, b = s
+            key_input(dic, a, b)
+        
+        for neighbour in dic[s]:
+            a, b = neighbour
+            if neighbour not in visited and a < rows and b < cols:
+                visited.append(neighbour)
+                stack[0:0] = [neighbour]
+        
+
+dfs(answer_board, 3,3, rows, cols)
