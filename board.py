@@ -23,7 +23,7 @@ board_mines = deepcopy(board_ori)
 def mines_generation(mines):
     ls = []
     # generate random 
-    for i in range(mines):
+    for _ in range(mines):
         # data structure problem
         ls.append((random.randint(0, rows-1),random.randint(0, cols-1)))
     # check distinct
@@ -46,7 +46,7 @@ mines_generation(mines)
 # check mine
 def mine_check(board, x, y):
     ls = []
-    for a,b in [i for i in [(x-1, y-1), (x-1, y), (x-1, y+1), (x, y-1), (x, y+1), (x+1, y-1), (x+1, y), (x+1, y+1)]]:
+    for a,b in [i for i in [(x-1,y-1), (x, y-1), (x+1, y-1), (x+1, y), (x+1, y+1), (x,y+1), (x-1, y+1), (x-1, y)]]:
         if a < 0 or b < 0:
             pass
         else:
@@ -79,7 +79,7 @@ for i in range(rows):
 
 def key_input(dic, x, y):
     dic[(x, y)] = []
-    for i in [(x-1, y), (x-1, y+1), (x,y+1), (x+1, y+1), (x+1, y), (x+1, y-1), (x, y-1), (x-1,y-1)]:
+    for i in [(x-1,y-1), (x, y-1), (x+1, y-1), (x+1, y), (x+1, y+1), (x,y+1), (x-1, y+1), (x-1, y)]:
         a , b = i
         if a < 0 or b < 0:
             continue
@@ -97,7 +97,7 @@ def dfs(board, x, y, rows, cols):
 
     # key error cause dic is not inputed recursively
     dic = {
-        (x,y):[(x-1, y), (x-1, y+1), (x,y+1), (x+1, y+1), (x+1, y), (x+1, y-1), (x, y-1), (x-1,y-1)]
+        (x,y):[(x-1,y-1), (x, y-1), (x+1, y-1), (x+1, y), (x+1, y+1), (x,y+1), (x-1, y+1), (x-1, y)]
     }
        
     while stack:
